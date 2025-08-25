@@ -128,6 +128,8 @@ app.get('/listings', async (req, res) => {
   res.render('index', { listings });
 });
 
+  app.get('/listings/:id', async (req, res) => {
+  const { id } = req.params;
   const listing = await Listing.findById(id).populate('reviews');
   if (!listing) {
     return res.redirect('/listings');
@@ -136,6 +138,7 @@ app.get('/listings', async (req, res) => {
     listing.reviews = [];
   }
   res.render('show', { listing });
+});
 
 app.post('/listings/:id/reviews', async (req, res) => {
   const listing = await Listing.findById(req.params.id);
